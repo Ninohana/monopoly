@@ -29,25 +29,95 @@
 </head>
 
 <body>
+    <img src="img/Berkeley.jpg" id="xxxxxxxxx">
     <div class="app">
-        <canvas id="myCanvas" width="800" height="800"></canvas>
+        <canvas id="game" width="500" height="500" style="border: 1px solid #d3d3d3;"></canvas>
     </div>
+
 </body>
 
 <script>
-    var canvas = document.getElementById("myCanvas");
-    var context = canvas.getContext("2d");
-    context.fillStyle = "red";
-    context.fillRect(0, 0, 100, 100);
-    context.fillStyle = "black";
-    fillText("China", 200, 100);
+    var monopoly = {
+        init: function (canvas) {
+            this.canvas = canvas;
+            var context = canvas.getContext("2d");
+            if (context == null)
+                throw new Error("初始化绘制上下文失败");
+            this.context = context;
+        },
+        clean: function () {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        },
+        drawItem: function () {
 
-    function fillText(text, x, y) {
-        context.font = "20px Arial";
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.fillText(text, x, y);
+        },
+        drawText: function (text, x, y) {
+            if (this.context == null)
+                this.init();
+            var context = this.context;
+            context.fillStyle = "red";
+            context.font = "20px Arial";//设置文本内容的当前字体属性
+            context.textAlign = "center";//设置文本内容的当前对齐方式
+            context.textBaseline = "middle";//设置在绘制文本时使用的当前文本基线
+            context.fillText(text, x, y);
+        }
     }
+</script>
+<script>
+    monopoly.init(document.getElementById("game"));//初始化游戏
+    //var context = monopoly.context;
+
+    //monopoly.drawText("China", 200, 200);
+    var canvas = document.getElementById("game");
+    var context = canvas.getContext("2d");
+
+    var grd = context.createLinearGradient(0, 0, 170, 0);
+    grd.addColorStop(0, "black");
+    grd.addColorStop(1, "white");
+
+    context.fillStyle = grd;
+    context.fillRect(20, 20, 150, 100);
+
+    context.rect(20, 20, 150, 100);
+    context.stroke();
+
+    monopoly.clean();
+
+    // var img = document.getElementById("xxxxxxxxx");
+    // context.drawImage(img, 0, 0);
+
+    // monopoly.clean();
+    // var pattern = context.createPattern(img, "no-repeat");
+    // context.rect(0, 0, 150, 100);
+    // context.fillStyle = pattern;
+    // context.fill();
+
+    // var gradient = monopoly.context.createLinearGradient(0, 0, 0, 170);
+    // gradient.addColorStop(0, "black");
+    // gradient.addColorStop(1, "white");
+    // monopoly.fillStyle = gradient;
+    // monopoly.context.fillRect(0, 0, 200, 200);
+
+    // var img = document.getElementById("xxxxxxxxx");
+    // monopoly.context.drawImage(img, 10, 10);
+    // var context = canvas.getContext("2d");
+    // context.fillStyle = "red";
+    // context.fillRect(0, 0, 100, 100);
+    // context.fillStyle = "black";
+</script>
+<script>
+    context.font = "20px Georgia";
+    context.strokeText("Hello World!", 10, 50);
+
+    context.font = "30px Verdana";
+    // 创建渐变
+    var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
+    gradient.addColorStop("0", "magenta");
+    gradient.addColorStop("0.5", "blue");
+    gradient.addColorStop("1.0", "red");
+    // 用渐变填色
+    context.strokeStyle = gradient;
+    context.strokeText("w3school.com.cn", 10, 90);
 </script>
 
 </html>
