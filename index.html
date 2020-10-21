@@ -29,7 +29,6 @@
 </head>
 
 <body>
-    <img src="img/Berkeley.jpg" id="xxxxxxxxx">
     <div class="app">
         <canvas id="game" width="500" height="500" style="border: 1px solid #d3d3d3;"></canvas>
     </div>
@@ -39,75 +38,62 @@
 <script>
     var monopoly = {
         init: function (canvas) {
+            //绑定参数
             this.canvas = canvas;
             var context = canvas.getContext("2d");
-            if (context == null)
-                throw new Error("初始化绘制上下文失败");
-            this.context = context;
-        },
-        clean: function () {
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        },
-        drawItem: function () {
-
-        },
-        drawText: function (text, x, y) {
-            if (this.context == null)
-                this.init();
-            var context = this.context;
-            context.fillStyle = "red";
+            if (context == null) throw new Error("初始化绘制上下文失败");
+            //设置默认属性
             context.font = "20px Arial";//设置文本内容的当前字体属性
             context.textAlign = "center";//设置文本内容的当前对齐方式
             context.textBaseline = "middle";//设置在绘制文本时使用的当前文本基线
-            context.fillText(text, x, y);
+            context.fillStyle = "black";//设置笔触颜色
+            this.context = context;
+        },
+        getContext: function () {
+            if (this.context == null)
+                this.init();
+            return this.context;
+        },
+        clean: function () {
+            this.getContext().clearRect(0, 0, this.canvas.width, this.canvas.height);
+        },
+        drawContry: function (name, x, y) {
+            this.drawZone(name, x, y, 100, 100);
+        },
+        drawZone: function (x, y, width, height, text) {
+            var context = this.getContext();
+            //绘制背景
+            context.fillStyle = "red";
+            context.fillRect(x, y, width, height);
+            //绘制文字
+            context.fillStyle = "yello";
+            context.fillText(text, x + width / 2, y + height / 2);
+        },
+        drawImageByUrl: function (url, x, y, width, height) {
+            var context = this.getContext();
+            var img = new Image();
+            img.src = url;
+            img.onload = function () {
+                // var pattern = context.createPattern(img, "no-repeat");
+                // context.rect(x, y, width, height);
+                // context.fillStyle = pattern;
+                // context.fill();
+                context.drawImage(img, x, y, width, height);
+            }
         }
     }
 </script>
 <script>
     monopoly.init(document.getElementById("game"));//初始化游戏
-    //var context = monopoly.context;
+    monopoly.drawContry("China", 0, 0);
+    monopoly.drawContry("Engish", 200, 400);
 
-    //monopoly.drawText("China", 200, 200);
-    var canvas = document.getElementById("game");
-    var context = canvas.getContext("2d");
-
-    var grd = context.createLinearGradient(0, 0, 170, 0);
-    grd.addColorStop(0, "black");
-    grd.addColorStop(1, "white");
-
-    context.fillStyle = grd;
-    context.fillRect(20, 20, 150, 100);
-
-    context.rect(20, 20, 150, 100);
-    context.stroke();
-
-    monopoly.clean();
-
-    // var img = document.getElementById("xxxxxxxxx");
-    // context.drawImage(img, 0, 0);
-
-    // monopoly.clean();
-    // var pattern = context.createPattern(img, "no-repeat");
-    // context.rect(0, 0, 150, 100);
-    // context.fillStyle = pattern;
-    // context.fill();
-
-    // var gradient = monopoly.context.createLinearGradient(0, 0, 0, 170);
-    // gradient.addColorStop(0, "black");
-    // gradient.addColorStop(1, "white");
-    // monopoly.fillStyle = gradient;
-    // monopoly.context.fillRect(0, 0, 200, 200);
-
-    // var img = document.getElementById("xxxxxxxxx");
-    // monopoly.context.drawImage(img, 10, 10);
-    // var context = canvas.getContext("2d");
-    // context.fillStyle = "red";
-    // context.fillRect(0, 0, 100, 100);
-    // context.fillStyle = "black";
 </script>
 <script>
+    var canvas = document.getElementById("game")
+    var context = canvas.getContext("2d");
     context.font = "20px Georgia";
-    context.strokeText("Hello World!", 10, 50);
+    context.strokeText("Hello 尼玛!", 100, 50);
 
     context.font = "30px Verdana";
     // 创建渐变
@@ -117,7 +103,7 @@
     gradient.addColorStop("1.0", "red");
     // 用渐变填色
     context.strokeStyle = gradient;
-    context.strokeText("w3school.com.cn", 10, 90);
+    context.strokeText("芜湖，起飞！", 200, 100);
 </script>
 
 </html>
