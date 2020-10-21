@@ -57,17 +57,14 @@
         clean: function () {
             this.getContext().clearRect(0, 0, this.canvas.width, this.canvas.height);
         },
-        drawContry: function (name, x, y) {
-            this.drawZone(name, x, y, 100, 100);
-        },
-        drawZone: function (x, y, width, height, text) {
+        drawContry: function (name, x, y, backColor, textColor) {
             var context = this.getContext();
             //绘制背景
-            context.fillStyle = "red";
-            context.fillRect(x, y, width, height);
+            context.fillStyle = backColor || "white";
+            context.fillRect(x, y, 100, 100);
             //绘制文字
-            context.fillStyle = "yello";
-            context.fillText(text, x + width / 2, y + height / 2);
+            context.fillStyle = textColor || "black";
+            context.fillText(name, x + 50, y + 50);
         },
         drawImageByUrl: function (url, x, y, width, height) {
             var context = this.getContext();
@@ -80,30 +77,43 @@
                 // context.fill();
                 context.drawImage(img, x, y, width, height);
             }
+        },
+        drawBackground: function (pattern) {
+            var context = this.getContext();
+            context.fillStyle = pattern || "#e3e3e3";
+            context.fillRect(0, 0, this.canvas.width, this.canvas.height);
         }
     }
 </script>
 <script>
     monopoly.init(document.getElementById("game"));//初始化游戏
-    monopoly.drawContry("China", 0, 0);
-    monopoly.drawContry("Engish", 200, 400);
-
+    monopoly.drawBackground();
+    // monopoly.drawContry("China", 0, 0);
+    // monopoly.drawContry("Engish", 200, 400);
+    //绘制地图
+    for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 5; j++) {
+            if (i == 0 || j == 0 || i == 4 || j == 4) {
+                monopoly.drawContry("Name", 100 * i, 100 * j);
+            }
+        }
+    }
 </script>
 <script>
-    var canvas = document.getElementById("game")
-    var context = canvas.getContext("2d");
-    context.font = "20px Georgia";
-    context.strokeText("Hello 尼玛!", 100, 50);
+    // var canvas = document.getElementById("game")
+    // var context = canvas.getContext("2d");
+    // context.font = "20px Georgia";
+    // context.strokeText("Hello World!", 100, 50);
 
-    context.font = "30px Verdana";
-    // 创建渐变
-    var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop("0", "magenta");
-    gradient.addColorStop("0.5", "blue");
-    gradient.addColorStop("1.0", "red");
-    // 用渐变填色
-    context.strokeStyle = gradient;
-    context.strokeText("芜湖，起飞！", 200, 100);
+    // context.font = "30px Verdana";
+    // // 创建渐变
+    // var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
+    // gradient.addColorStop("0", "skyblue");
+    // gradient.addColorStop("0.5", "blue");
+    // gradient.addColorStop("1.0", "green");
+    // // 用渐变填色
+    // context.strokeStyle = gradient;
+    // context.strokeText("芜湖，起飞！", 200, 100);
 </script>
 
 </html>
